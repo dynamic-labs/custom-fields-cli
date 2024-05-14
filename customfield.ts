@@ -38,8 +38,7 @@ const getFieldData = async () => {
     const regex = await askQuestion(
       "Enter regex (leave empty if not applicable): "
     );
-    const unique =
-      (await askQuestion("Is the field required? (y/n): ")) === "y";
+    const unique = (await askQuestion("Is the field unique? (y/n): ")) === "y";
     if (regex) validationRules.regex = regex;
     if (unique) validationRules.unique = unique;
   } else {
@@ -83,6 +82,7 @@ const postData = async (data: any) => {
 interface Field {
   name: string;
   id: string;
+  fieldType: string;
 }
 
 const getExistingFields = async () => {
@@ -98,13 +98,13 @@ const getExistingFields = async () => {
 
   if (response.ok) {
     const data: Field[] = (await response.json()) as Field[];
-    return data.map((field: { id: string }) => field.id);
+    return data;
   } else {
     console.error("Error fetching fields:", response.statusText);
   }
 };
 
-const deleteAllExistingFields = async (existingFields: string[]) => {
+const deleteFields = async (existingFields: string[]) => {
   const url = `http://localhost:4200/api/v0/custom/fields`;
 
   for (const fieldId of existingFields) {
@@ -126,15 +126,31 @@ const deleteAllExistingFields = async (existingFields: string[]) => {
 
 const main = async () => {
   let existingFields = await getExistingFields();
+  if (existingFields && existingFields?.length > 0) {
+    console.log("Existing fields:", existingFields);
 
-  const action = await askQuestion(
-    "Do you want to delete all existing fields? (y/n): "
-  );
+    const action = await askQuestion(
+      "Do you want to delete all existing fields? Type n if you only want to delete one (y/n): "
+    );
 
-  if (action.toLowerCase() === "y" && existingFields) {
-    if (existingFields.length === 0) {
-      console.log("No existing fields to delete");
-    } else await deleteAllExistingFields(existingFields);
+    if (action.toLowerCase() === "y" && existingFields) {
+      await deleteFields(existingFields.map((field) => field.id));
+    } else {
+      const fieldToDelete = await askQuestion(
+        "Type the name of the field you would like to delete, or skip: "
+      );
+
+      if (fieldToDelete) {
+        const field = existingFields?.find(
+          (field) => field.name === fieldToDelete
+        );
+        if (field) {
+          await deleteFields([field.id]);
+        } else {
+          console.error("Field not found");
+        }
+      }
+    }
   }
 
   console.log("Create a new field!");
