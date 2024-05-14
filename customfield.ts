@@ -26,19 +26,24 @@ const getFieldData = async () => {
   const validationRules: any = {};
 
   if (fieldType === "checkbox") {
-    validationRules.checkboxText = await askQuestion("Enter checkbox text: ");
+    validationRules.checkboxText = await askQuestion(
+      "Enter the text that will be displayed for the checkbox field: "
+    );
   } else if (fieldType === "select") {
     const options = await askQuestion(
-      "Enter valid options separated by commas: "
+      "Enter dropdown options for the select field, separated by commas: "
     );
     validationRules.validOptions = options
       .split(",")
       .map((option) => ({ label: option.trim() }));
   } else if (fieldType === "text") {
     const regex = await askQuestion(
-      "Enter regex (leave empty if not applicable): "
+      "Enter the regex pattern that the text field must match (leave empty if not applicable): "
     );
-    const unique = (await askQuestion("Is the field unique? (y/n): ")) === "y";
+    const unique =
+      (await askQuestion(
+        "Should this field be unique for every user in the environment? (y/n): "
+      )) === "y";
     if (regex) validationRules.regex = regex;
     if (unique) validationRules.unique = unique;
   } else {
@@ -85,7 +90,7 @@ interface Field {
   fieldType: string;
 }
 
-const getExistingFields = async () => {
+const getExistingFields = async (): Promise<Field[]> => {
   const url = `http://localhost:4200/api/v0/environments/${ENV_ID}/custom/fields`;
 
   const response = await fetch(url, {
@@ -101,6 +106,7 @@ const getExistingFields = async () => {
     return data;
   } else {
     console.error("Error fetching fields:", response.statusText);
+    return [];
   }
 };
 
@@ -125,23 +131,23 @@ const deleteFields = async (existingFields: string[]) => {
 };
 
 const main = async () => {
-  let existingFields = await getExistingFields();
-  if (existingFields && existingFields?.length > 0) {
+  const existingFields = await getExistingFields();
+  if (existingFields && existingFields.length > 0) {
     console.log("Existing fields:", existingFields);
 
     const action = await askQuestion(
-      "Do you want to delete all existing fields? Type n if you only want to delete one (y/n): "
+      "Do you want to delete all existing fields? Type 'n' if you only want to delete one (y/n): "
     );
 
-    if (action.toLowerCase() === "y" && existingFields) {
+    if (action.toLowerCase() === "y") {
       await deleteFields(existingFields.map((field) => field.id));
     } else {
       const fieldToDelete = await askQuestion(
-        "Type the name of the field you would like to delete, or skip: "
+        "Type the name of the field you would like to delete, or press Enter to skip: "
       );
 
       if (fieldToDelete) {
-        const field = existingFields?.find(
+        const field = existingFields.find(
           (field) => field.name === fieldToDelete
         );
         if (field) {
