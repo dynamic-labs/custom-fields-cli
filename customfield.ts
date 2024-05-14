@@ -34,7 +34,6 @@ const getFieldData = async () => {
     validationRules.validOptions = options
       .split(",")
       .map((option) => ({ label: option.trim() }));
-    console.log(validationRules.validOptions);
   } else if (fieldType === "text") {
     const regex = await askQuestion(
       "Enter regex (leave empty if not applicable): "
