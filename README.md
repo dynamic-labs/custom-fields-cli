@@ -35,4 +35,4 @@ There are three types of custom fields:
    npm start
    ```
 
-![Alt Text](https://utfs.io/f/da7ea4e7-161b-4b65-8fb4-2cf991d61959-tan93r.gif)
+![Alt Text](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTN2azYyM2JkY3BpcDk4enB4bGV3aWs3Y2hoZGRvNDJ5NHEwb3VqZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hC9XfswIWS9tMzITYP/giphy.gif)
