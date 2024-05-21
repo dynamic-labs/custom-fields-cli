@@ -1,9 +1,10 @@
 import * as readline from "readline";
+import dotenv from "dotenv";
 
-// swap with your env details
-const ENV_ID = "b9418222-e2b0-4cf9-b3b5-b15a1f6eadff";
-const BEARER_TOKEN =
-  "dyn_e4DwJows8Z1RL0VFTWx9jWJyys7NaAZWDxWLeLvcIpTkqrHkf93knWse";
+dotenv.config();
+
+const ENV_ID = process.env.ENV_ID;
+const BEARER_TOKEN = process.env.BEARER_TOKEN;
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -66,7 +67,7 @@ const getFieldData = async () => {
 };
 
 const postData = async (data: any) => {
-  const url = `http://localhost:4200/api/v0/environments/${ENV_ID}/custom/fields`;
+  const url = `https://app.dynamic.xyz/api/v0/environments/${ENV_ID}/custom/fields`;
 
   const response = await fetch(url, {
     method: "POST",
@@ -91,7 +92,7 @@ interface Field {
 }
 
 const getExistingFields = async (): Promise<Field[]> => {
-  const url = `http://localhost:4200/api/v0/environments/${ENV_ID}/custom/fields`;
+  const url = `https://app.dynamic.xyz/api/v0/environments/${ENV_ID}/custom/fields`;
 
   const response = await fetch(url, {
     method: "GET",
@@ -111,7 +112,7 @@ const getExistingFields = async (): Promise<Field[]> => {
 };
 
 const deleteFields = async (existingFields: string[]) => {
-  const url = `http://localhost:4200/api/v0/custom/fields`;
+  const url = `https://app.dynamic.xyz/api/v0/custom/fields`;
 
   for (const fieldId of existingFields) {
     const response = await fetch(`${url}/${fieldId}`, {
@@ -133,7 +134,7 @@ const deleteFields = async (existingFields: string[]) => {
 const main = async () => {
   const existingFields = await getExistingFields();
   if (existingFields && existingFields.length > 0) {
-    console.log("Existing fields:", existingFields);
+    console.log("Existing fields:", JSON.stringify(existingFields, null, 2));
 
     const action = await askQuestion(
       "Do you want to delete all existing fields? Type 'n' if you only want to delete one (y/n): "
