@@ -18,10 +18,10 @@ There are three types of custom fields:
 # Setup Instructions
 
 1. Use a Node version with fetch, such as 18.x.x.
-2. Swap these values in `.ENV`:
+2. Swap these values in `.env`:
 
-   - `ENV_ID`
-   - `BEARER_TOKEN`
+   - `ENV_ID` : https://app.dynamic.xyz/dashboard/developer/api => Environment ID
+   - `BEARER_TOKEN`: https://app.dynamic.xyz/dashboard/developer/api => Create Token
 
 3. Install dependencies:
 
