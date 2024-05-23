@@ -14,7 +14,6 @@ There are three types of custom fields:
 ### Checkbox
 
 - Provide the text that goes along with a checkbox.
-- Currently, this field is not editable after the first login.
 
 # Setup Instructions
 
