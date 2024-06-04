@@ -17,6 +17,8 @@ There are three types of custom fields:
 
 # Setup Instructions
 
+First, you must use a Dynamic SDK version of >= v2.1.0-alpha.24
+
 1. Use a Node version with fetch, such as 18.x.x.
 2. Swap these values in `.env`:
 
@@ -34,4 +36,7 @@ There are three types of custom fields:
    npm start
    ```
 
-![Alt Text](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTN2azYyM2JkY3BpcDk4enB4bGV3aWs3Y2hoZGRvNDJ5NHEwb3VqZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hC9XfswIWS9tMzITYP/giphy.gif)
+Example: T-shirt Size is a standard information capture field that can be created in the dashboard
+<img width="643" alt="Screenshot 2024-06-04 at 9 36 11 AM" src="https://github.com/dynamic-labs/custom-fields-cli/assets/100806611/a09bccd3-f3f6-4335-9ed9-8285bc8bf33b">
+<img width="363" alt="Screenshot 2024-06-04 at 9 46 15 AM" src="https://github.com/dynamic-labs/custom-fields-cli/assets/100806611/2f3aaf72-ddef-4e69-a20e-8d19afb3e394">
+
