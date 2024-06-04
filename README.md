@@ -17,7 +17,7 @@ There are three types of custom fields:
 
 # Setup Instructions
 
-First, you must use a Dynamic SDK version of >= v2.1.0-alpha.24
+First, you must update your Dynamic SDK version to v2.1.
 
 1. Use a Node version with fetch, such as 18.x.x.
 2. Swap these values in `.env`:
